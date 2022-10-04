@@ -1,0 +1,39 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content%}
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Sign In</h2>
+        <hr>
+{% if request.user.is_authenticated %}
+<h4 class="alert alert-worning">
+    Welcome, {{request.user.username}}, you are now logged in
+    <a href="{% url 'logout' %}">Log out</a>
+</h4>
+{% else %}
+
+
+<form method="POST">
+        {% csrf_token %}
+        
+    {% include 'store/_alerts.html' %}
+        <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input type="text" class="form-control" name='user' id="inputUsername" placeholder="" required>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" name='password' id="inputPassword" required>
+        </div>
+
+        <div class="form-group">
+            <div class="pretty p-svg p-curve p-jelly">
+                <input type="checkbox" name='rememberme' id="inputTerms" />
+                    <label>Remember Me</label>
+            </div>
+        </div>
+        <button type="submit" name='btnSignin' class="btn btn-warning">Login</button>
+        
+    </form>
+{% endif %}
+</div>
+{% endblock content%}

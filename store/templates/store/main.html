@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Ecom</title>
+
+	<!---<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />-->
+    <!-- CSS only -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+	<!-- <script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+
+		function getCookie(name) {
+		    // Split cookie string and get all individual name=value pairs in an array
+		    var cookieArr = document.cookie.split(";");
+
+		    // Loop through the array elements
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+
+		        /* Removing whitespace at the beginning of the cookie name
+		        and compare it with the given string */
+		        if(name == cookiePair[0].trim()) {
+		            // Decode the cookie value and return
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+
+		    // Return null if not found
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('Cart:', cart)
+	
+	</script> -->
+
+	
+	
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	 
+		<div class="collapse navbar-collapse" id="basicExampleNav8">
+  
+			<!-- Right -->
+			<ul class="navbar-nav ml-auto ">
+			  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+				<a href="{% url 'index' %}" type="button"
+				  class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">HOME</a>
+			  </li>
+			  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+				<a href="{% url 'about' %}" type="button"
+				  class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">About</a>
+			  </li>
+			  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+				<a href="{% url 'test' %}" type="button"
+				  class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">Cantact</a>
+			  </li>
+			</ul>
+		
+		  </div>
+		 <!-- <a class="btn btn-warning" href="{% url 'index' %}">HOME</a>
+	  <a class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning" href="{% url 'about' %}">About</a> -->
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="{% url 'index' %}">Store <span class="sr-only">(current)</span></a>
+	      </li>
+	 
+	    </ul>
+		{% if request.user.is_authenticated %}
+	<span class="text-light" style="margin-right: 5px;">
+		Welcome {{request.user.username}}
+	</span>
+	{% endif %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<form class="form-inline" action="{% url 'index' %}">
+			  <input class="form-control mr-sm-2" type="search" name='namesearch' placeholder="Search" aria-label="Search">
+			  <button class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning" type="submit">Search</button>
+			</form>
+		  </nav>
+	    <div class="form-inline my-2 my-lg-0">
+	     	<!-- <a href="#"class="btn btn-warning">Login</a> -->
+			 <!-- Navbar -->
+   <nav class="navbar navbar-expand-md navbar-light">
+
+	<!-- Collapse button -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav8"
+	  aria-controls="basicExampleNav8" aria-expanded="false" aria-label="Toggle navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+    
+	<!-- Links -->
+	{% if request.user.is_authenticated %}
+	<div class="collapse navbar-collapse" id="basicExampleNav8">
+  
+		<!-- Right -->
+		<ul class="navbar-nav ml-auto ">
+		  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+			<a href="{% url 'profile' %}" type="button"
+			  class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">Profile</a>
+		  </li>
+		  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+			<a href="{% url 'logout' %}" type="button"
+			  class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">Log Out</a>
+		  </li>
+		  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+			<a href="{% url 'show_product_favorite' %}" type="button"
+			  class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">My Favorite</a>
+		  </li>
+		</ul>
+	
+	  </div>
+	{% else %}
+	<div class="collapse navbar-collapse" id="basicExampleNav8">
+  
+		<!-- Right -->
+		<ul class="navbar-nav ml-auto ">
+		  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+			<a href="{% url 'signin' %}" type="button"
+			  class="btn btn-outline-primary btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">Sign in</a>
+		  </li>
+		  <li class="nav-item pl-2 mb-2 mb-md-0 ">
+			<a href="{% url 'signup' %}" type="button"
+			  class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light btn-warning">Sign up</a>
+		  </li>
+		</ul>
+	
+	  </div>
+	{% endif %}
+	
+	<!-- Links -->
+  
+  </nav>
+  <!-- Navbar -->
+	     	
+	     	<a href="{% url 'cart'  %}">
+	    		<img  id="cart-icon" src="{% static 'images/cart.png' %}">
+	    	</a>
+	    	<p id="cart-total">0</p>
+
+	    </div>
+	  </div>
+	</nav>
+	 <div class="container">
+			<br>
+	
+		
+        {% block content %}
+
+
+        {% endblock content %}
+		
+    </div>  
+<!-- Footer -->
+<br>
+<footer class="page-footer bg-dark font-small mdb-color pt-4" id="you">
+
+	<!-- Footer Links -->
+	<div class="container text-center text-md-left">
+  
+	  <!-- Footer links -->
+	  <div class="row text-center text-md-left mt-3 pb-3">
+  
+		
+		<hr class="w-100 clearfix d-md-none">
+  
+		
+  
+		<!-- Grid column -->
+		<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+		  <h6 class="text-uppercase mb-4 font-weight-bold">JOIN AS</h6>
+		  <p>
+			<a style="color : red;" href="#!">Facebook</a>
+		  </p>
+		  <p>
+			<a style="color : red;" href="#!">Twitter</a>
+		  </p>
+		  <p>
+			<a style="color : red;" href="#!">Instagram</a>
+		  </p>
+		  <p>
+			<a style="color : red;" href="#!">Linkd-In</a>
+		  </p>
+		</div>
+  
+		<!-- Grid column -->
+		<hr class="w-100 clearfix d-md-none">
+  
+		<!-- Grid column -->
+		<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+		  <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+		  <p>
+			<i class="fas fa-home mr-3"></i> Ouarzazte, NY 10012, US</p>
+		  <p>
+			<i class="fas fa-envelope mr-3"></i> yousef.khayi@edu.uiz.ac.ma</p>
+		  <p>
+			<i class="fas fa-phone mr-3"></i> +212 667870252</p>
+		  <p>
+			<i class="fas fa-print mr-3"></i> +212 639390147</p>
+		</div>
+		<!-- Grid column -->
+  
+	  </div>
+	  <!-- Footer links -->
+  
+	  <hr>
+  
+	  <!-- Grid row -->
+	  <div class="row d-flex align-items-center">
+		<div class="text-center py-3">
+			Copyright &copy; <span class="year">2021</span> Alimenté By Khayi Yousef && Lamzali Mohamed
+		  </div>
+  
+		
+  
+		
+  
+	  </div>
+	  <!-- Grid row -->
+  
+	</div>
+	<!-- Footer Links -->
+  
+  </footer>
+  <!-- Footer -->
+  
+  
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+   <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+  <script>
+	  $(document).ready(function(){
+		  $("#staticBackdrop").on('shown.bs.modal',function(){
+			  $(this).find('#inputQty').focus();
+			  $(this).find('#inputQty').select();
+		  });
+	  });
+  </script>
+</body>
+</html>

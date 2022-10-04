@@ -1,0 +1,82 @@
+{% extends 'store/main.html' %}  
+{% load static %}  
+{% block content %}    
+	<div class="my-from container p-5 my-5 rounded border border-warning">
+		<h2 class="text-center">Cart</h2>
+		<hr>
+		<div class="col-lg-12">
+		<div class="box-element">
+
+			<a  class="btn btn-outline-dark" href="{% url 'index' %}">&#x2190; Continue Shopping</a>
+
+			<br>
+			<br>
+			<table class="table">
+				<tr>
+					<th><h5>Items: <strong>{{order.id}}</strong></h5></th>
+					<th><h5>Total:<strong> {{total}}$</strong></h5></th>
+					<th>
+						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+					</th>
+				</tr>
+			</table>
+
+		</div>
+		
+		{% if order %}
+		<div class="box-element">
+			<table class="table">
+				<thead>
+				  <tr>
+					<th scope="col">#</th>
+					<th scope="col">Produit</th>
+					<th scope="col">Image</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Price</th>
+					<th scope="col">Sub Price</th>
+				  </tr>
+				</thead>
+				<tbody >
+					{% for line in orderdetails %}
+				  <tr>
+					<th scope="row">{{forloop.counter}}</th>
+					<td>{{line.product.name}}</td>
+					<td><img src="{{line.product.photo.url}}" style="width: 100px;height: 100;" alt=""></td>
+					<td>{{line.quantity}}
+						<div class="quantity">
+							<a href="{% url 'add_qty' orderdetails_id=line.id %}"><img  data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}"></a>
+					
+							<a href="{% url 'sub_qty' orderdetails_id=line.id %}"><img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}"></a>
+						</div>
+					</td>
+					<td>{{line.prix}}$</td>
+					<td style="font-weight: bold;color: darkred;">{% widthratio line.quantity 1 line.prix %}$</td>
+					<td>
+						<a href="{% url 'remove_from_cart' orderdetails_id=line.id %}" class="btn btn-outline-danger btn-sm">Remove</a>
+					</td>
+				  </tr>
+				
+				  
+				  {% empty %}
+	   <h4 class="alert alert-warning">
+		   No Details here,
+		   <a href="{% url 'index' %}">Home</a>
+	   </h4>
+				  {% endfor %}
+				</tbody>
+			  </table>
+
+		</div>
+		
+		
+		{% else %}
+		<h5 class="alert alert-warning">
+			No Orders her
+			<a href="{% url 'index' %}">Home</a>
+		</h5>
+		{% endif %}
+		<hr>
+	</div>
+</div>
+
+{% endblock content %}
